@@ -42,6 +42,16 @@ public class ApplicationContext {
 		this.users = users;
 	}
 	
+	public boolean deleteCity(String pttBroj) {
+		City forDelete = null;
+		for(City c:cities) {
+			if(c.getPttBroj().equals(pttBroj)) forDelete=c;
+		}
+		cities.remove(forDelete);
+		if(forDelete==null) return false;
+		else return true;
+	}
+	
 	public static ApplicationContext getInstance() {
 		if(instance==null) {
 			instance=new ApplicationContext();
@@ -55,6 +65,13 @@ public class ApplicationContext {
 			if(s.equals(usrpw)) return true;
 		}
 		return false;
+	}
+	
+	public City findCity(String pttBroj) {
+		for(City c:cities) {
+			if(c.getPttBroj().equals(pttBroj)) return c;
+		}
+		return null;
 	}
 	
 }

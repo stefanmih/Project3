@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +20,23 @@ body {
 	width: 200px;
 	height: 100px;
 }
+
+#delete {
+	top: 100px;
+	visibility: hidden;
+	align-self: left;
+	width: 200px;
+	height: 50px;
+	visibility: hidden;
+}
+#find {
+	top: 100px;
+	visibility: hidden;
+	align-self: left;
+	width: 200px;
+	height: 50px;
+	visibility: hidden;
+}
 </style>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -34,46 +53,93 @@ body {
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-
 	<div class="alert alert-primary" role="alert">
-		<%=request.getAttribute("user")%>
+		<c:out value="${requestScope.user}"></c:out>
 	</div>
 	<button type="button" class="btn btn-danger"
 		onclick="location.href = '/WebApp03/login.jsp';">Log out</button>
 	<br>
 	<br>
 	<form action="/WebApp03/home" method="post">
-	<%request.setAttribute("user", "Logged in as: "+request.getParameter("username"));
-	request.setAttribute("username", request.getAttribute("username"));%>
+		<%
+			request.setAttribute("user", "Logged in as: " + request.getParameter("username"));
+			request.setAttribute("username", request.getAttribute("username"));
+		%>
 		<button type="submit" class="btn btn-primary" name="listall"
 			value="true">List all cities</button>
 	</form>
 	<br>
 	<table class="table">
-		<%=(request.getAttribute("table")==null)?"":request.getAttribute("table")%>
+		<%=(request.getAttribute("table") == null) ? "" : request.getAttribute("table")%>
 	</table>
 	<br>
 	<button type="button" class="btn btn-primary"
 		onclick="$('#hidden').css({
 	        'visibility': 'visible'
+	  	    });$('#delete').css({
+			 'visibility': 'hidden'
+	  	    });
+	  	  $('#find').css({
+				 'visibility': 'hidden'
 	  	    });">Add
+		city</button>
+	<button type="button" class="btn btn-primary"
+		onclick="$('#delete').css({
+			 'visibility': 'visible'
+		  	    });$('#hidden').css({
+					 'visibility': 'hidden'
+		  	    });$('#find').css({
+					 'visibility': 'hidden'
+		  	    });">Delete
+		city</button>
+
+	<button type="button" class="btn btn-primary"
+		onclick="$('#find').css({
+			 'visibility': 'visible'
+		  	    });$('#hidden').css({
+					 'visibility': 'hidden'
+		  	    });$('#delete').css({
+					 'visibility': 'hidden'
+		  	    });">Find
 		city</button>
 	<br>
 	<br>
 	<div id="hidden">
-	<form action="/WebApp03/home" method="post">
-		<div class="form-group">
-			<label for="exampleFormControlInput1">Ime</label> <input name="naziv"
-				class="form-control" id="exampleFormControlInput1"
-				placeholder="Ime grada">
-		</div>
-		<div class="form-group">
-			<label for="exampleFormControlInput1">PTT broj</label> <input
-				name="pttbroj" class="form-control" id="exampleFormControlInput1"
-				placeholder="PTT broj">
-		</div>
-		<br>
-		<button type="submit" class="btn btn-primary" name="dodajgrad">Add</button>
+		<form action="/WebApp03/home" method="post">
+			<div class="form-group">
+				<label for="exampleFormControlInput1">Ime</label> <input
+					name="naziv" class="form-control" id="exampleFormControlInput1"
+					placeholder="Ime grada">
+			</div>
+			<div class="form-group">
+				<label for="exampleFormControlInput1">PTT broj</label> <input
+					name="pttbroj" class="form-control" id="exampleFormControlInput1"
+					placeholder="PTT broj">
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary" name="dodajgrad">Add</button>
+		</form>
+	</div>
+	<div id="delete">
+		<form action="/WebApp03/home" method="post">
+			<div class="form-group">
+				<label for="exampleFormControlInput1">Find PTT broj</label> <input
+					name="pttbrojdelete" class="form-control"
+					id="exampleFormControlInput1" placeholder="PTT broj">
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary" name="izbrisi">Delete</button>
+		</form>
+	</div>
+	<div id="find">
+		<form action="/WebApp03/home" method="post">
+			<div class="form-group">
+				<label for="exampleFormControlInput1">Find PTT broj</label> <input
+					name="pttbrojfind" class="form-control"
+					id="exampleFormControlInput1" placeholder="PTT broj">
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary" name="nadji">Find city</button>
 		</form>
 	</div>
 </body>

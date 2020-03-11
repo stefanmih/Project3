@@ -28,6 +28,11 @@ public class City {
 	public void setPttBroj(String pttBroj) {
 		this.pttBroj = pttBroj;
 	}
+
+	@Override
+	public String toString() {
+		return "City [ime=" + ime + ", pttBroj=" + pttBroj + "]";
+	}
 	
 	
 }
